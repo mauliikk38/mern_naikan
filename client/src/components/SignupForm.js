@@ -1,8 +1,11 @@
-import React from 'react'
+import React, {} from 'react'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import SigninForm from './SigninForm';
+
 
 const schema = yup.object({
     displayname: yup.string().required("Display Name is required"),
@@ -12,15 +15,23 @@ const schema = yup.object({
             pattern.test(value)
         )
     }),
-    confirmpassword: yup.string().required("Confirm password is required").min(4, "Confirm password must be at 4 characters long").test('passwordStrength', 'Password must contain at least one Uppercase letter, Special character, Number', (value) => {
-        return [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every((pattern) =>
-            pattern.test(value)
-        )
-    }).oneOf([yup.ref('password')], "Password and confirm password should match"),
-}).required();
-
+//     confirmpassword: yup.string().required("Confirm password is required").min(4, "Confirm password must be at 4 characters long").test('passwordStrength', 'Password must contain at least one Uppercase letter, Special character, Number', (value) => {
+//         return [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every((pattern) =>
+//             pattern.test(value)
+//         )
+//     }).oneOf([yup.ref('password')], "Password and confirm password should match"),
+// }).required();
+})
 const SignupForm = () => {
+    
+
+
     const onSubmit = (data) => {
+        console.log(data);
+        signupform(data);
+
+    }
+
         // if (!loader) {
         //     setLoader(true);
         //     signUp(formData, (res) => {
@@ -41,13 +52,27 @@ const SignupForm = () => {
         //         }
         //     });
         // }
-    };
+
+    
     const { register, handleSubmit, formState: { errors } } = useForm({
         mode: "onSubmit",
         resolver: yupResolver(schema),
     });
-
-
+// added
+    const signupform = (data) =>{
+        
+        
+       
+        if(data.displayname && data.email && data.password){
+            axios.post("http://localhost:3000/signout", data)
+            .then(res => alert(res))  
+                 
+        } else{
+            alert('invalid input')
+        }
+        
+    }
+ //added complete
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-1 sm:mb-2">
@@ -63,7 +88,7 @@ const SignupForm = () => {
                     type="text"
                     className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
 
-                    name="displayname"
+                    name="displayname" 
                 />
                 <p className='text-red-400'>{errors.displayname?.message}</p>
             </div>
@@ -81,7 +106,7 @@ const SignupForm = () => {
                     type="text"
                     className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
 
-                    name="email"
+                    name="email" 
                 />
                 <p className='text-red-400'>{errors.email?.message}</p>
             </div>
@@ -99,12 +124,12 @@ const SignupForm = () => {
                     type="password"
                     className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
 
-                    name="password"
+                    name="password" 
                 />
                 <p className='text-red-400'>{errors.password?.message}</p>
             </div>
 
-            <div className="mb-1 sm:mb-2">
+            {/* <div className="mb-1 sm:mb-2">
                 <label
                     htmlFor="confirmpassword"
                     className="inline-block mb-1 font-medium"
@@ -120,7 +145,7 @@ const SignupForm = () => {
                     name="confirmpassword"
                 />
                 <p className='text-red-400'>{errors.confirmpassword?.message}</p>
-            </div>
+            </div> */}
 
             <div className="mt-4 mb-2 sm:mb-4">
                 <button

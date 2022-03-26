@@ -29,6 +29,7 @@ app.use(express.json());
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded())
 
 // sanitize request data
 app.use(xss());
@@ -65,3 +66,13 @@ app.use(errorConverter);
 app.use(errorHandler);
 
 module.exports = app;
+
+// addded
+
+app.post("/signin", (req, res) =>{
+  res.send("my api login");
+})
+
+app.post("/signup", (req, res) =>{
+  console.log(req.body)
+})
