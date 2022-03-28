@@ -65,14 +65,15 @@ app.use(errorConverter);
 // handle error
 app.use(errorHandler);
 
+// added
+// app.post("/", (req, res) =>{
+//   res.send("my api login");
+// })
+
+// app.post("/signup", (req, res) =>{
+//   console.log(req.body)
+// })
+
+//complete
 module.exports = app;
 
-// addded
-
-app.post("/signin", (req, res) =>{
-  res.send("my api login");
-})
-
-app.post("/signup", (req, res) =>{
-  console.log(req.body)
-})

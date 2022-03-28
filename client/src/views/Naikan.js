@@ -1,11 +1,12 @@
 import React from 'react';
 import './Naikan.css';
-const Naikan = () => {
+
+const Naikan = ({setLoginUser}) => {
     return (
         <div>
             <div className='naikan'>
                 <h1>HELLO</h1>
-                <div className='button'>Logout</div>
+                <div className='button' onClick={() => setLoginUser({})} >Logout</div>
             </div>
         
         </div>

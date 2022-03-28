@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import SigninForm from './SigninForm';
+// import SigninForm from './SigninForm';
 
 
 const schema = yup.object({
@@ -23,11 +23,8 @@ const schema = yup.object({
 // }).required();
 })
 const SignupForm = () => {
-    
-
-
-    const onSubmit = (data) => {
-        console.log(data);
+        const onSubmit = (data) => {
+        // console.log(data);
         signupform(data);
 
     }
@@ -59,13 +56,11 @@ const SignupForm = () => {
         resolver: yupResolver(schema),
     });
 // added
-    const signupform = (data) =>{
-        
-        
-       
+    const signupform = (data) =>{                 
         if(data.displayname && data.email && data.password){
-            axios.post("http://localhost:3000/signout", data)
-            .then(res => alert(res))  
+            axios.post("http://localhost:5000/v1/auth/register", data)
+            .then(res => alert('Successfully Registered, Please login now.')) 
+            
                  
         } else{
             alert('invalid input')

@@ -1,8 +1,14 @@
+/* eslint-disable default-case */
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+// import { updateUserById } from '../../../server/src/services/user.service';
+// import { update } from '../../../server/src/models/token.model';
+// import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
 
 const schema = yup.object({
     email: yup.string().email("Email must be a valid email").required("Email is required"),
@@ -14,11 +20,46 @@ const schema = yup.object({
 }).required();
 
 const SigninForm = () => {
-    const onSubmit = data => console.log(data);
+
+    const [ user, setLoginUser] = useState({});
+    
+    // const navigate = useNavigate();
+    
+    const onSubmit = (data) => {
+    // console.log(data);
+    signinform(data);}
+
+
     const { register, handleSubmit, formState: { errors } } = useForm({
         mode: "onSubmit",
         resolver: yupResolver(schema),
     });
+
+    const signinform  = (data) => {
+        axios.post("http://localhost:5000/v1/auth/login", data)
+       .then(res => {
+           switch(res.status){
+               case 200:{alert('Login 23 Succesful')
+               setLoginUser(res.data.user);
+            //    navigate.push('/');                
+               break;
+            }
+               case 400 :{alert('Login Failed')
+            
+               
+               break;
+            }
+                default:
+                    break;
+                
+            }
+           
+       
+        //    alert('Login 234Succesful')
+        //    setLoginUser(res.data.user);
+           
+        //    navigate.push('/');           
+        })}
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
 
