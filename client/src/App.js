@@ -6,13 +6,13 @@ import Naikan from './views/Naikan';
 import { useState } from 'react';
 function App() {
 
-  const [ user, setLoginUser] = useState({});
+  const [ user, setSigninUser] = useState({});
   
 
   return (
     <Routes> 
-      <Route exact path="/" element={user && user._id ? <Naikan setLoginUser= {setLoginUser} /> : <Signin setLoginUser={setLoginUser}/>} />          
-      <Route path="/signin" element={<Signin setLoginUser={setLoginUser} />} />
+      <Route exact path="/" element={user && user._id ? <Naikan setSigninUser= {setSigninUser} /> : <Signin setSigninUser={setSigninUser}/>} />          
+      <Route path="/signin" element={<Signin setSigninUser={setSigninUser} />} />
       <Route path="/signup" element={<Signup />} />
           <Route path="/naikan" element={<Naikan />} />
     </Routes>

@@ -5,10 +5,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-// import { updateUserById } from '../../../server/src/services/user.service';
-// import { update } from '../../../server/src/models/token.model';
-// import { useNavigate } from "react-router-dom";
-import { useState } from 'react';
+import PropTypes from 'prop-types';
+
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object({
     email: yup.string().email("Email must be a valid email").required("Email is required"),
@@ -18,51 +17,31 @@ const schema = yup.object({
         )
     })
 }).required();
-
-const SigninForm = () => {
-
-    const [ user, setLoginUser] = useState({});
-    
-    // const navigate = useNavigate();
-    
+const SigninForm = ( ) => { 
+ 
+    const navigate = useNavigate();
     const onSubmit = (data) => {
-    // console.log(data);
-    signinform(data);}
-
-
+        // console.log(data);
+        signinform(data);
+    }
     const { register, handleSubmit, formState: { errors } } = useForm({
         mode: "onSubmit",
         resolver: yupResolver(schema),
     });
-
-    const signinform  = (data) => {
+    const signinform = (data) => {
         axios.post("http://localhost:5000/v1/auth/login", data)
-       .then(res => {
-           switch(res.status){
-               case 200:{alert('Login 23 Succesful')
-               setLoginUser(res.data.user);
-            //    navigate.push('/');                
-               break;
-            }
-               case 400 :{alert('Login Failed')
-            
-               
-               break;
-            }
-                default:
-                    break;
-                
-            }
-           
-       
-        //    alert('Login 234Succesful')
-        //    setLoginUser(res.data.user);
-           
-        //    navigate.push('/');           
-        })}
+            .then(res => {console.log(res);
+                if (res.status === 200) {
+                    alert(data.email +","+  data.password +" "+ "Login Successful")
+                   
+                    navigate("/naikan", { replace: true});
+                } else if (res.status === 401) {
+                   
+                }
+            }).catch(res => { console.log(res.data.message);})
+    }
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-
             <div className="mb-1 sm:mb-2">
                 <label
                     htmlFor="email"
@@ -75,12 +54,10 @@ const SigninForm = () => {
                     placeholder="john.doe@example.org"
                     type="text"
                     className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-
                     name="email"
                 />
                 <p className='text-red-400'>{errors.email?.message}</p>
             </div>
-
             <div className="mb-1 sm:mb-2">
                 <label
                     htmlFor="password"
@@ -93,12 +70,10 @@ const SigninForm = () => {
                     placeholder="*************"
                     type="password"
                     className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-
                     name="password"
                 />
                 <p className='text-red-400'>{errors.password?.message}</p>
             </div>
-
             <div className="mt-4 mb-2 sm:mb-4">
                 <button
                     type="submit"
@@ -111,5 +86,4 @@ const SigninForm = () => {
         </form>
     )
 }
-
 export default SigninForm
