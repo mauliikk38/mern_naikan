@@ -1,12 +1,12 @@
-import React, {} from 'react'
+import React, { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-// import SigninForm from './SigninForm';
-
-
+import { signUp } from "./../state/action-creators/user";
+import { useDispatch } from "react-redux";
+import Alert from "./Alert";
 const schema = yup.object({
     displayname: yup.string().required("Display Name is required"),
     email: yup.string().email("Email must be a valid email").required("Email is required"),
@@ -14,62 +14,42 @@ const schema = yup.object({
         return [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every((pattern) =>
             pattern.test(value)
         )
-    }),
-//     confirmpassword: yup.string().required("Confirm password is required").min(4, "Confirm password must be at 4 characters long").test('passwordStrength', 'Password must contain at least one Uppercase letter, Special character, Number', (value) => {
-//         return [/[a-z]/, /[A-Z]/, /[0-9]/, /[^a-zA-Z0-9]/].every((pattern) =>
-//             pattern.test(value)
-//         )
-//     }).oneOf([yup.ref('password')], "Password and confirm password should match"),
-// }).required();
-})
-const SignupForm = () => {
-        const onSubmit = (data) => {
-        // console.log(data);
-        signupform(data);
+    })
+}).required();
 
-    }
+const SignupForm = (props) => {
+    const [loader, setLoader] = useState(false);
+    const [message, setMessage] = useState(false);
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
-        // if (!loader) {
-        //     setLoader(true);
-        //     signUp(formData, (res) => {
-        //         setLoader(false);
-        //         if (res.status === 200) {
-        //             snackBar.show({
-        //                 open: true,
-        //                 type: "success",
-        //                 message: res.data.message,
-        //             });
-        //             props.history.push("/signin");
-        //         } else if (res.status === 400) {
-        //             let err = "";
-        //             for (const errorsKey in res.data.errors || {}) {
-        //                 err += res.data.errors[errorsKey] + "\n";
-        //             }
-        //             if (err) alert(err);
-        //         }
-        //     });
-        // }
-
-    
+    const onSubmit = (data) => {
+        if (!loader) {
+            setLoader(true);
+            dispatch(signUp(data, (res) => {
+                setLoader(false);
+                if (res.status === 201) {
+                    setMessage(false);
+                    navigate("/signin", { replace: true, state: { message: "Please sign in to continue!" } });
+                } else if (res.status === 400) {
+                    setMessage(res.data.message);
+                }
+            }));
+        }
+    };
     const { register, handleSubmit, formState: { errors } } = useForm({
         mode: "onSubmit",
         resolver: yupResolver(schema),
     });
-// added
-    const signupform = (data) =>{                 
-        if(data.displayname && data.email && data.password){
-            axios.post("http://localhost:5000/v1/auth/register", data)
-            .then(res => alert('Successfully Registered, Please login now.')) 
-            
-                 
-        } else{
-            alert('invalid input')
-        }
-        
-    }
- //added complete
+
+
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
+            {
+                message &&
+                <Alert Color="gray" Message={message} Show={() => { setMessage(false) }} />
+            }
+
             <div className="mb-1 sm:mb-2">
                 <label
                     htmlFor="displayname"
@@ -83,7 +63,7 @@ const SignupForm = () => {
                     type="text"
                     className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
 
-                    name="displayname" 
+                    name="displayname"
                 />
                 <p className='text-red-400'>{errors.displayname?.message}</p>
             </div>
@@ -101,7 +81,7 @@ const SignupForm = () => {
                     type="text"
                     className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
 
-                    name="email" 
+                    name="email"
                 />
                 <p className='text-red-400'>{errors.email?.message}</p>
             </div>
@@ -119,35 +99,28 @@ const SignupForm = () => {
                     type="password"
                     className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
 
-                    name="password" 
+                    name="password"
                 />
                 <p className='text-red-400'>{errors.password?.message}</p>
             </div>
 
-            {/* <div className="mb-1 sm:mb-2">
-                <label
-                    htmlFor="confirmpassword"
-                    className="inline-block mb-1 font-medium"
-                >
-                    Confirm Password
-                </label>
-                <input
-                    {...register("confirmpassword")}
-                    placeholder="*************"
-                    type="password"
-                    className="flex-grow w-full h-12 px-4 mb-2 transition duration-200 bg-white border border-gray-300 rounded shadow-sm appearance-none focus:border-deep-purple-accent-400 focus:outline-none focus:shadow-outline"
-
-                    name="confirmpassword"
-                />
-                <p className='text-red-400'>{errors.confirmpassword?.message}</p>
-            </div> */}
-
             <div className="mt-4 mb-2 sm:mb-4">
+
                 <button
                     type="submit"
-                    className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-gray-700 focus:shadow-outline focus:outline-none"
+                    className="inline-flex items-center justify-center w-full h-12 px-6 font-medium tracking-wide text-white transition duration-200 rounded shadow-md bg-gray-900 hover:bg-gray-700 focus:shadow-outline focus:outline-none" disabled={loader}
                 >
-                    Sign up
+                    {
+                        !loader && (
+                            "Sign up"
+                        )
+                    }
+
+                    {
+                        loader && (
+                            "Processing..."
+                        )
+                    }
                 </button>
             </div>
             Already have an account? <Link to="/signin">Sign in here</Link>

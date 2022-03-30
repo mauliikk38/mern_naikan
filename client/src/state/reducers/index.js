@@ -1,10 +1,10 @@
 import { combineReducers } from "redux";
 import userReducer from "./userReducer";
-import naikanReducer from "./naikanReducer";
+import messengerReducer from "./naikanReducer";
 
 const reducers = combineReducers({
     user: userReducer,
-    naikan: naikanReducer
+    messenger: messengerReducer
 });
 
 export default reducers;

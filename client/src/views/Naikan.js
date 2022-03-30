@@ -1,27 +1,57 @@
-import React from 'react';
-import './Naikan.css';
-import { useNavigate } from "react-router-dom";
-// import { User } from '../../../server/src/models';
-
+import React from 'react'
+import { useSelector } from 'react-redux';
+import NoteList from '../components/NoteList';
+import Search from '../components/Search';
+import Header from '../components/Header';
+import styled from "styled-components";
+import { nanoid } from 'nanoid';
+import { useState } from 'react';
 
 const Naikan = () => {
-    const navigate = useNavigate();
-    
-    // naikan(data);
+    const [notes, setNotes] = useState([]);
 
-    // const naikan = (data) =>{
-        
+    const [searchText, setSearchText] = useState('');
 
-    // }
+    const [darkMode, setDarkMode] = useState(false);
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
+    const addNote = (text) => {
+		const date = new Date();
+		const newNote = {
+			id: nanoid(),
+			text: text,
+			date: date.toLocaleDateString('en-GB', options),
+		};
+		const newNotes = [...notes, newNote];
+		setNotes(newNotes);
+	};
+
+    const deleteNote = (id) => {
+		const newNotes = notes.filter((note) => note.id !== id);
+		setNotes(newNotes);
+	};
+
+
+
+
+    const user = useSelector(state => state.user.user);
+    console.log(user);
     return (
-        <div>
-            <div className='naikan'>
-                <h1>name</h1>
-                <div className='button' onClick={() => navigate("/", { replace: true})} >Logout</div>                
-            </div>
-        
+        <div className={`${darkMode && 'dark-mode'}`}>
+        <Div>
+            <Header handleToggleDarkMode={setDarkMode}/>
+            <Search handleSearchNote={setSearchText}/>
+           <NoteList notes={notes.filter((note)=> note.text.toLowerCase().includes(searchText))} handleAddNote={addNote} handleDeleteNote = {deleteNote} />
+        </Div>
         </div>
     )
 }
+const Div =  styled.div`
+    max-width: 960px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 15px;
+	padding-left: 15px;
+	min-height: 100vh;
+    `;
 export default Naikan

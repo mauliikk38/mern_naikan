@@ -1,5 +1,5 @@
 import React from 'react'
-import { FaReact, FaNode, FaStickyNote } from 'react-icons/fa';
+import { FaReact, FaNode } from 'react-icons/fa';
 import { SiSocketdotio, SiMongodb } from 'react-icons/si';
 
 const PublicLayout = (props) => {
@@ -11,13 +11,20 @@ const PublicLayout = (props) => {
                 className="absolute inset-0 object-cover w-full h-full"
                 alt=""
             />
-            <div className="relative bg-gray-900 bg-opacity-75 h-screen">            
+            <div className="relative bg-gray-900 bg-opacity-75 h-screen">
                 <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
-                <div className="ax-w-lg mb-6 font-sans text-4xl font-bold text-white sm:text-4xl sm:leading-none">
-                              <FaStickyNote /> Daily Naikan </div>
                     <div className="flex flex-col items-center justify-between xl:flex-row">
-                       <div className="w-full max-w-xl mb-12 xl:mb-0 xl:pr-16 xl:w-7/12">                       
-                       </div>
+                        <div className="w-full max-w-xl mb-12 xl:mb-0 xl:pr-16 xl:w-7/12">
+                            <div className="max-w-lg mb-6 font-sans text-3xl font-bold text-white sm:text-4xl sm:leading-none">
+                                NAIKAN <br className="hidden md:block" />
+                                <div className="flex gap-2 mt-4">
+                                    Built using
+                                    <FaReact title="React" /><FaNode title="Node.js" /><SiSocketdotio title="Socket.IO" /><SiMongodb title="MongoDB" />
+                                </div>
+                            </div>
+
+
+                        </div>
                         {
                             Form &&
                             (<div className="w-full max-w-xl xl:px-8 xl:w-5/12">

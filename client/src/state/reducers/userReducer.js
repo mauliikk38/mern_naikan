@@ -1,36 +1,36 @@
 // eslint-disable-next-line
-import { SET_SIGNIN_USER, SET_SIGNOUT_USER, SET_USER_DETAIL } from "../types";
-import jwt_decode from "jwt-decode";
-// import isEmpty from "is-empty";
+import { SET_USER, SET_ACCESS_TOKEN, SET_REFRESH_TOKEN, RESET_STATE } from "../types";
+
 const initialState = {
-    isAuthenticated: false,
-    data: localStorage.jwtToken ? jwt_decode(localStorage.jwtToken)?.user : {},
-    _id: localStorage.jwtToken ? jwt_decode(localStorage.jwtToken)?.user?._id : '',
-    user_type: ''
+    user: localStorage.user ? JSON.parse(localStorage.user) : {},
+    access: localStorage.access ? localStorage.access : '',
+    refresh: localStorage.refresh ? localStorage.refresh : '',
 };
 
 const user = (state = initialState, action) => {
     switch (action.type) {
-        case SET_SIGNIN_USER: {
+        case SET_USER: {
+            localStorage.setItem('user', JSON.stringify(action.payload));
             return {
                 ...state,
-                _id: action.payload?.user?._id,
-                isAuthenticated: action.payload?.isAuthenticated,
-                data: action.payload?.user,
-                user_type: "user"
+                user: action.payload
             };
         }
-        case SET_SIGNOUT_USER: {
+        case SET_ACCESS_TOKEN: {
+            localStorage.setItem('access', action.payload);
             return {
                 ...state,
-                user_status: action.payload?.message,
-            };
+                access: action.payload,
+            }
         }
-        case SET_USER_DETAIL: {
-            const user = { ...state.data, ...action?.payload }
-            return { ...state, data: user, _id: user?._id }
+        case SET_REFRESH_TOKEN: {
+            localStorage.setItem('refresh', action.payload);
+            return {
+                ...state,
+                refresh: action.payload,
+            }
         }
-        case 'RESET_STATE': {
+        case RESET_STATE: {
             return initialState
         }
         default:

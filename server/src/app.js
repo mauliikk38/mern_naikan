@@ -29,7 +29,6 @@ app.use(express.json());
 
 // parse urlencoded request body
 app.use(express.urlencoded({ extended: true }));
-app.use(express.urlencoded())
 
 // sanitize request data
 app.use(xss());
@@ -41,6 +40,11 @@ app.use(compression());
 // enable cors
 app.use(cors());
 app.options('*', cors());
+
+// app.use(cors({
+//   origin: process.env.FRONTEND_BASE_URL,
+//   optionsSuccessStatus: 200
+// }));
 
 // jwt authentication
 app.use(passport.initialize());
@@ -54,6 +58,7 @@ if (config.env === 'production') {
 // v1 api routes
 app.use('/v1', routes);
 
+
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
   next(new ApiError(httpStatus.NOT_FOUND, 'Not found'));
@@ -65,15 +70,4 @@ app.use(errorConverter);
 // handle error
 app.use(errorHandler);
 
-// added
-// app.post("/", (req, res) =>{
-//   res.send("my api login");
-// })
-
-// app.post("/signup", (req, res) =>{
-//   console.log(req.body)
-// })
-
-//complete
 module.exports = app;
-
