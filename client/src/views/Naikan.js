@@ -1,18 +1,34 @@
 import React from 'react'
-import { useSelector } from 'react-redux';
-import NoteList from '../components/NoteList';
-import Search from '../components/Search';
-import Header from '../components/Header';
+import NoteList from '../Note/NoteList';
+import Search from '../Note/Search';
+import Header from '../Note/Header';
 import styled from "styled-components";
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
 
 const Naikan = () => {
     const [notes, setNotes] = useState([]);
+	useEffect(() => {
+		const savedNotes = JSON.parse(
+			localStorage.getItem('naikan')
+		);
+
+		if (savedNotes) {
+			setNotes(savedNotes);
+		}
+	}, []);
+
+	useEffect(() => {
+		localStorage.setItem(
+			'naikan',
+			JSON.stringify(notes)
+		);
+	}, [notes]);
 
     const [searchText, setSearchText] = useState('');
 
-    const [darkMode, setDarkMode] = useState(false);
+    
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'};
 
     const addNote = (text) => {
@@ -24,32 +40,35 @@ const Naikan = () => {
 		};
 		const newNotes = [...notes, newNote];
 		setNotes(newNotes);
+		console.log(newNote);
 	};
 
     const deleteNote = (id) => {
 		const newNotes = notes.filter((note) => note.id !== id);
 		setNotes(newNotes);
+		console.log(newNotes);
 	};
 
 
 
 
-    const user = useSelector(state => state.user.user);
-    console.log(user);
+   
     return (
-        <div className={`${darkMode && 'dark-mode'}`}>
+        
         <Div>
-            <Header handleToggleDarkMode={setDarkMode}/>
+            <Header />
+			
             <Search handleSearchNote={setSearchText}/>
            <NoteList notes={notes.filter((note)=> note.text.toLowerCase().includes(searchText))} handleAddNote={addNote} handleDeleteNote = {deleteNote} />
         </Div>
-        </div>
+        
     )
 }
 const Div =  styled.div`
     max-width: 960px;
 	margin-right: auto;
 	margin-left: auto;
+	margin-top: 2rem;
 	padding-right: 15px;
 	padding-left: 15px;
 	min-height: 100vh;

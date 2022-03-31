@@ -11,17 +11,10 @@
 //     ADD_TO_ROOM,
 //     SCROLL_TO_BOTTOM
 // } from "../types";
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 const initialState = {
-    socket: {},
-    active_room: 0,
-    users: [], // List of users to select from for new chat
-    open_select_user_dialog: false,
-    rooms: [],
-    scrollToBottom: 0,
-    _id: localStorage.jwtToken
-        ? jwt_decode(localStorage.jwtToken)?.user?._id
-        : "",
+    notes: [],
+    
 };
 
 const messenger = (state = initialState, action) => {

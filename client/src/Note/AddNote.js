@@ -20,6 +20,7 @@ const AddNote = ({ handleAddNote }) => {
 		}
 	};
 
+
 	return (
 		<Div>
 			<textarea

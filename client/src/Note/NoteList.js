@@ -4,7 +4,7 @@ import AddNote from './AddNote';
 import styled from "styled-components";
 
 
-const NoteList = ({ notes , handleAddNote , handleDeleteNote }) => {
+const NoteList = ({ notes , handleAddNote , handleDeleteNote}) => {
     return (
         <Div>
             {notes.map((note) => <Note id={note.id}

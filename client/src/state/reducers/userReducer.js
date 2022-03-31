@@ -31,6 +31,9 @@ const user = (state = initialState, action) => {
             }
         }
         case RESET_STATE: {
+            localStorage.removeItem('user');
+            localStorage.removeItem('access');
+            localStorage.removeItem('refresh');
             return initialState
         }
         default:

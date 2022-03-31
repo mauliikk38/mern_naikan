@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate} from "react-router-dom";
 import Signin from './views/Signin';
 import Signup from './views/Signup';
 import Naikan from './views/Naikan';
@@ -10,7 +10,7 @@ function App() {
   return (
     <Provider store={store}>
       <Routes>
-        <Route path="/" element={<Signin />} />
+        <Route path="/" element={localStorage.getItem('user') ?  <Navigate to="/naikan" /> : <Signin /> }   />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/naikan" element={
