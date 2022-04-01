@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from "styled-components";
+import axios from "axios";
 
 const AddNote = ({ handleAddNote }) => {
 	const [noteText, setNoteText] = useState('');
@@ -16,6 +17,8 @@ const AddNote = ({ handleAddNote }) => {
 		if (noteText.trim().length > 0) 
         {
 			handleAddNote(noteText);
+			const payload = {text: noteText}
+			axios.post('http://localhost:5000/v1/auth/naikan/insert', payload);
 			setNoteText('');
 		}
 	};
@@ -24,11 +27,12 @@ const AddNote = ({ handleAddNote }) => {
 	return (
 		<Div>
 			<textarea
-				rows='8'
+				rows='4'
 				cols='10'
 				placeholder='Type to add a note...'
                 value={noteText}
-                onChange={handleChange}				
+                onChange={handleChange}	
+				name = "text"			
 				
 			></textarea>
 			<Div2>
@@ -47,7 +51,8 @@ const Div =  styled.div`
 background-color: #67d7cc;
 border-radius: 10px;
 padding: 1rem;
-min-height: 170px;
+min-height: 180px;
+
 display: flex;
 flex-direction: column;
 justify-content: space-between;

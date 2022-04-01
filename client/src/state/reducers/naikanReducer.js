@@ -17,7 +17,7 @@ const initialState = {
     
 };
 
-const messenger = (state = initialState, action) => {
+const naikan = (state = initialState, action) => {
     switch (action.type) {
         // case SET_ROOMS:
         //     return {
@@ -141,4 +141,4 @@ const messenger = (state = initialState, action) => {
 //     };
 // };
 
-export default messenger;
+export default naikan;

@@ -12,6 +12,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 	return (
 		<Div>
+			<Div1>
 			<Div2>
 			<GrDocumentNotes size={40}/>
 			<h1 className= "text">NAIKAN, {user.displayname}</h1>
@@ -22,22 +23,36 @@ const Header = () => {
 					navigate("/", { replace: true})}
 					} >Logout
 				</button>
-				</div>
-			
+			</div>	
+		</Div1>
+		<hr />
 		</Div>
+
+		
 	);
 };
 const Div =  styled.div`
+hr {
+	color: black;
+	overflow: visible;
+	text-align: center;
+	height: 2px;
+	margin-top: -0.8rem;
+}
+
+`;
+const Div1 =  styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	margin-bottom:1.5em;
+	
     
 
     h1{
         font-size: 2em;
         font-weight: bold;   
     }
+	
 	
 `;
 const Div2 =  styled.div`
@@ -46,7 +61,7 @@ const Div2 =  styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-
+  margin-top:1rem;
   color: black;
   text-decoration: none;
 

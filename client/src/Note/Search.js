@@ -23,7 +23,7 @@ const Div =  styled.div`
 	border-radius: 10px;
 	padding: 5px;
 	margin-bottom: 1.5em;
-
+	margin-top: 1.5em;
 
  input {
 	border: none;

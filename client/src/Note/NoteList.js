@@ -19,11 +19,12 @@ const NoteList = ({ notes , handleAddNote , handleDeleteNote}) => {
 }
 const Div =  styled.div`
 display: grid;
-grid-gap: 1rem;
+grid-gap: 1.5rem;
 grid-template-columns: repeat(
     auto-fill,
     minmax(250px, 1fr)
 );
+
 `;
 
 export default NoteList

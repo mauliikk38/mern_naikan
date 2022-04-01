@@ -48,6 +48,16 @@ const verifyEmail = {
     token: Joi.string().required(),
   }),
 };
+const insert = {
+  body: Joi.object().keys({
+    text: Joi.string().required(),
+  }),
+};
+const remove = {
+  body: Joi.object().keys({
+    text: Joi.string().required(),
+  }),
+};
 
 module.exports = {
   register,
@@ -57,4 +67,6 @@ module.exports = {
   forgotPassword,
   resetPassword,
   verifyEmail,
+  insert,
+  remove
 };
