@@ -1,13 +1,29 @@
-import React from 'react';
+// import React, { useState } from 'react';
 import Note from './Note';
 import AddNote from './AddNote';
 import styled from "styled-components";
+import axios from "axios";
 
 
-const NoteList = ({ notes , handleAddNote , handleDeleteNote}) => {
+const NoteList = ({  notes, setNotes, handleAddNote , handleDeleteNote}) => {
+ 
+    
+      
+      axios.get('/v1/auth/naikan')
+      .then((response) => {
+        // setNotes(response);
+       
+        console.log('Data has been received!!');
+      })
+      .catch(() => {
+      console.log('Error retrieving data!!!');
+      });
+
+
     return (
         <Div>
-            {notes.map((note) => <Note id={note.id}
+          
+            {notes.map(( note) => <Note id={note.id}
 					text={note.text}
 					date={note.date}
                     handleDeleteNote={handleDeleteNote}

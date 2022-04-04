@@ -28,20 +28,7 @@ const refreshTokens = catchAsync(async (req, res) => {
   res.send({ ...tokens });
 });
 
-const insertNote = catchAsync(async (req, res) => {
-   const note = await Notes.create({text: req.body.text});
-   res.send(note);
-});
 
-const getNote = catchAsync(async (req, res) => {
-  const gnote = await Notes.find({_id: mongoose.Types.ObjectId(req.body._id)});
-  res.send(gnote);
-});
-
-const deleteNote = catchAsync(async (req, res) => {
-  const dnote = await Notes.findOneandDeleteOne({_id: mongoose.Types.ObjectId(req.body._id)});
-  res.send(dnote);
-});
 
 
 
@@ -50,8 +37,5 @@ module.exports = {
   login,
   logout,
   refreshTokens,
-  insertNote,
-  getNote,
-  deleteNote, 
 
 };

@@ -6,9 +6,6 @@ import styled from "styled-components";
 import { nanoid } from 'nanoid';
 import { useState } from 'react';
 import axios from "axios";
-
-
-
 const Naikan = () => {
     const [notes, setNotes] = useState([]);
 	

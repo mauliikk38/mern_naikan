@@ -2,8 +2,7 @@ const express = require('express');
 const validate = require('../../middlewares/validate');
 const authValidation = require('../../validations/auth.validation');
 const authController = require('../../controllers/auth.controller');
-const insertNote = require('../../controllers/auth.controller.js')
-const deleteNote = require('../../controllers/auth.controller.js')
+const noteController = require('../../controllers/note.controller');
 
 const router = express.Router();
 
@@ -11,9 +10,9 @@ router.post('/register', validate(authValidation.register), authController.regis
 router.post('/login', validate(authValidation.login), authController.login);
 router.post('/logout', validate(authValidation.logout), authController.logout);
 router.post('/refresh-tokens', validate(authValidation.refreshTokens), authController.refreshTokens);
-router.post('/naikan/insert',validate(authValidation.insert),authController.insertNote);
-router.post('/naikan/delete',validate(authValidation.remove),authController.deleteNote);
-
+router.post('/naikan/insert',validate(authValidation.insert),noteController.insertNote);
+router.post('/naikan/delete',validate(authValidation.remove),noteController.deleteNote);
+router.get('/naikan',noteController.getNote)
 module.exports = router;
 
 /**

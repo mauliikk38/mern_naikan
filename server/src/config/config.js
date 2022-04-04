@@ -8,9 +8,9 @@ module.exports = {
   mongoose: {
     url: process.env.MONGODB_URL + (process.env.NODE_ENV === 'test' ? '-test' : ''),
     options: {
-      useCreateIndex: true,
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // useNewUrlParser: true,
+      // useCreateIndex: true,
+      // useUnifiedTopology: true
     },
   },
   jwt: {

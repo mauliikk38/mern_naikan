@@ -4,12 +4,17 @@ const bcrypt = require('bcryptjs');
 const { toJSON, paginate } = require('./plugins');
 
 const noteSchema = mongoose.Schema(
+  
+
   {
-      text: String,
+      text:{
+       type: String,
+      }
+    
   },
-  {
+{
     timestamps: true,
-  }
+}
 );
 
 
