@@ -2,7 +2,7 @@ import React from 'react';
 import { MdSearch } from 'react-icons/md';
 import styled from "styled-components";
 
-const Search = ({ handleSearchNote }) => {
+const Search = ({ notes, handleSearchNote }) => {
 	return (
 		<Div>
 			<MdSearch className='search-icons' size='1.5em' />

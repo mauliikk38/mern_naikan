@@ -4,10 +4,11 @@ import Search from '../Note/Search';
 import Header from '../Note/Header';
 import styled from "styled-components";
 import { nanoid } from 'nanoid';
-import { useState } from 'react';
+import { useState  } from 'react';
 import axios from "axios";
 const Naikan = () => {
     const [notes, setNotes] = useState([]);
+    // const [status, setStatus] = useState(null);
 	
 
     const [searchText, setSearchText] = useState('');
@@ -26,25 +27,27 @@ const Naikan = () => {
 		setNotes(newNotes);
 		console.log(newNote);
 	};
-
+	// useEffect(() => {
     const deleteNote = (id) => {
 		const newNotes = notes.filter((note) => note.id !== id);
-		const payload = {_id: id }
-			axios.post('http://localhost:5000/v1/auth/naikan/delete', payload);
+		const payload = {_id: id };
+		axios.post('http://localhost:5000/v1/auth/naikan/delete', payload);
+		console.log(payload);
 		setNotes(newNotes);
 		console.log(newNotes);
 	};
+// }, []);
 
 
-
+// notes={notes.filter((note)=> note.text.toLowerCase().includes(searchText))}
 
    
     return (
         
         <Div>
             <Header />			
-            <Search handleSearchNote={setSearchText}/>
-           <NoteList notes={notes.filter((note)=> note.text.toLowerCase().includes(searchText))} handleAddNote={addNote} handleDeleteNote = {deleteNote} />
+            <Search notes={notes.filter((note)=> note.text.toLowerCase().includes(searchText))} handleSearchNote={setSearchText}/>
+           <NoteList  handleAddNote={addNote} handleDeleteNote = {deleteNote} />
         </Div>
         
     )

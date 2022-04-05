@@ -1,4 +1,5 @@
 const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi)
 const { password } = require('./custom.validation');
 
 const register = {
@@ -55,7 +56,7 @@ const insert = {
 };
 const remove = {
   body: Joi.object().keys({
-    text: Joi.string().required(),
+    _id: Joi.objectId().required(),
   }),
 };
 

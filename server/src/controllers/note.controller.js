@@ -1,6 +1,7 @@
 const Notes = require('../models/notes.model.js');
 const catchAsync = require('../utils/catchAsync');
-const ObjectID = require('mongodb').ObjectID;
+const { objectId } = require('../validations/custom.validation.js');
+var ObjectId = require('mongodb').ObjectID;
 
 const insertNote = catchAsync(async (req, res) => {
     const note = await Notes.create({text: req.body.text});
@@ -9,18 +10,16 @@ const insertNote = catchAsync(async (req, res) => {
  
  const getNote = catchAsync(async (req, res) => {
    const gnote = await Notes.find();
-   res.send(gnote);
+   res.status("200").send(gnote);
  });
  
  const deleteNote = catchAsync(async (req, res) => {
-   const dnote = await Notes.deleteOne({text: req.body.text});
+   const dnote = await Notes.findOneAndDelete({_id: ObjectId(req.body._id)});
    res.send(dnote);
  });
-//_id: mongoose.ObjectId(req.body._id)
  module.exports = {
     insertNote,
     getNote,
     deleteNote, 
-  
   };
   
