@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import styled from "styled-components";
-import axios from "axios";
+import {useDispatch} from "react-redux";
+import { addNote} from "../state/action-creators/naikan.js";
+
+
 
 const AddNote = ({ handleAddNote }) => {
 	const [noteText, setNoteText] = useState('');
 	const characterLimit = 200;
-
+	const dispatch = useDispatch();
 	const handleChange = (event) => {
 		if (characterLimit - event.target.value.length >= 0) 
         {
@@ -16,9 +19,10 @@ const AddNote = ({ handleAddNote }) => {
 	const handleSaveClick = () => {
 		if (noteText.trim().length > 0) 
         {
+			dispatch(addNote({text:noteText}));
+			
 			handleAddNote(noteText);
-			const payload = {text: noteText}
-			axios.post('http://localhost:5000/v1/auth/naikan/insert', payload);
+
 			setNoteText('');
 		}
 	};

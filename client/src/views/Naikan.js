@@ -5,9 +5,13 @@ import Header from '../Note/Header';
 import styled from "styled-components";
 import { nanoid } from 'nanoid';
 import { useState  } from 'react';
-import axios from "axios";
+// import axios from "axios";
+import {useDispatch} from "react-redux";
+import { removeNote} from "../state/action-creators/naikan.js";
 const Naikan = () => {
     const [notes, setNotes] = useState([]);
+	const dispatch = useDispatch();
+
     // const [status, setStatus] = useState(null);
 	
 
@@ -30,9 +34,10 @@ const Naikan = () => {
 	// useEffect(() => {
     const deleteNote = (id) => {
 		const newNotes = notes.filter((note) => note.id !== id);
-		const payload = {_id: id };
-		axios.post('http://localhost:5000/v1/auth/naikan/delete', payload);
-		console.log(payload);
+		dispatch(removeNote({_id : id}));
+		// const payload = {_id: id };
+		// axios.post('http://localhost:5000/v1/auth/naikan/delete', payload);
+		// console.log(payload);
 		setNotes(newNotes);
 		console.log(newNotes);
 	};

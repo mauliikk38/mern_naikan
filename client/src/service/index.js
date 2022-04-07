@@ -40,7 +40,7 @@ api.defaults.headers.common['Authorization'] = localStorage.jwtToken || ''
 
 const baseUrl = {
     auth: '/v1/auth/',
-    messenger: '/v1/messenger',
+    naikan: '/v1/auth/naikan',
 }
 
 export const authService = {
@@ -49,9 +49,8 @@ export const authService = {
     signOut: (data) => api.post(baseUrl.auth + `logout`, data, statusCheck).then(onSuccess, onError),
 }
 
-export const messengerService = {
-    getRooms: (data) => api.post(baseUrl.messenger + `/getRooms`, data, statusCheck).then(onSuccess, onError),
-    getUsers: (data) => api.post(baseUrl.messenger + `/getUsers`, data, statusCheck).then(onSuccess, onError),
-    getMessages: (data) => api.post(baseUrl.messenger + `/messages`, data, statusCheck).then(onSuccess, onError),
-    createOneToOneRoom: (data) => api.post(baseUrl.messenger + `/createOneToOneRoom`, data, statusCheck).then(onSuccess, onError),
+export const naikanService = {
+    addNote: (data) => api.post(baseUrl.naikan + `/insert`, data, statusCheck).then(onSuccess, onError),
+    removeNote: (data) => api.post(baseUrl.naikan + `/delete`, data, statusCheck).then(onSuccess, onError),
+    // fetchNote: (data) => api.get(baseUrl.naikan + `/`, data, statusCheck).then(onSuccess, onError),
 }

@@ -7,3 +7,5 @@ export const SET_SIGNUP_USER = "SET_SIGNUP_USER";
 export const SET_SIGNIN_USER = "SET_SIGNIN_USER";
 export const SET_SIGNOUT_USER = "SET_SIGNOUT_USER";
 export const RESET_STATE = "RESET_STATE";
+export const ADD_NOTE = "ADD_NOTE";
+export const REMOVE_NOTE = "REMOVE_NOTE";
