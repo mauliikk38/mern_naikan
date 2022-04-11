@@ -23,7 +23,7 @@ const Note = ({ id, text, date, handleDeleteNote }) => {
   )
 } 
 const Div =  styled.div`
-background-color: pink;
+background-color: #67d7cc;
 border-radius: 10px;
 padding: 1rem;
 min-height: 170px;
@@ -31,6 +31,9 @@ display: flex;
 flex-direction: column;
 justify-content: space-between;
 white-space: pre-wrap;
+  span{
+    color:black;
+  }
 `;
 
 const Div2 =  styled.div`

@@ -4,12 +4,17 @@ const { objectId } = require('../validations/custom.validation.js');
 var ObjectId = require('mongodb').ObjectID;
 
 const insertNote = catchAsync(async (req, res) => {
-    const note = await Notes.create({text: req.body.text});
+  console.log(req.user);
+    const note = await Notes.create({text: req.body.text,
+      user_id: req.user.id
+    });
     res.send(note);
  });
  
  const getNote = catchAsync(async (req, res) => {
-   const gnote = await Notes.find();
+   const gnote = await Notes.find({
+     user_id: req.user.id
+    });
    res.status("200").send(gnote);
  });
  

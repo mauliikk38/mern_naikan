@@ -54,9 +54,9 @@ passport.use('jwt', jwtStrategy);
 if (config.env === 'production') {
   app.use('/v1/auth', authLimiter);
 }
-
+//passport.authenticate('jwt', { session: false })
 // v1 api routes
-app.use('/v1', routes);
+app.use('/v1',passport.authenticate('jwt', { session: false }), routes);
 
 
 // send back a 404 error for any unknown api request

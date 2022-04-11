@@ -12,7 +12,7 @@ const initialState = {
 const naikanReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_NOTE:{
-      localStorage.setItem('add', JSON.stringify(action.payload));
+      // localStorage.setItem('add', JSON.stringify(action.payload));
       return {
         ...state,
         add: action.payload

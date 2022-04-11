@@ -52,7 +52,7 @@ const AddNote = ({ handleAddNote }) => {
 	);
 }
 const Div =  styled.div`
-background-color: #67d7cc;
+background-color: white;
 border-radius: 10px;
 padding: 1rem;
 min-height: 180px;
@@ -65,7 +65,7 @@ white-space: pre-wrap;
 textarea {
 	border: none;
 	resize: none;
-	background-color: #67d7cc;
+	background-color: white;
 }
 
 textarea:focus {
@@ -80,15 +80,19 @@ const Div2 =  styled.div`
 	justify-content: space-between;
 
     button {
-        background-color: white;
+        background-color:#007bff;
+		border-color: #007bff;
         border: none;
+		color: white;
         border-radius: 15px;
         padding: 5px 10px 5px 10px;
     }
     
     button:hover {
-        background-color: grey;
+        background-color: #17a2b8;
+		border-color: #17a2b8;
         cursor: pointer;
+		color: white;
     }
     
 `;
